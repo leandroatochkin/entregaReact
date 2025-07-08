@@ -1,13 +1,11 @@
-import { useState, useCallback, useEffect, useContext, createContext } from 'react'
 import Splash from './views/splash/Splash'
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
-import { ShoppingCart } from './store/Store'
+import { ShoppingCartProvider } from './store/ShoppingCartProvider'
+import { AuthProvider } from './store/AuthProvider'
+import { CatalogProvider } from './store/CatalogProvidex'
 
 function App() {
-  const [count, setCount] = useState(0)
-  
-
 
   return (
     <div
@@ -18,11 +16,15 @@ function App() {
         width: '100vw',
       }}
     >
-      <ShoppingCart.Provider value={[]}>
+     <AuthProvider>
+      <CatalogProvider>
+      <ShoppingCartProvider>
           <Navbar />
           <Splash />
           <Footer />
-      </ShoppingCart.Provider>
+      </ShoppingCartProvider>
+      </CatalogProvider>
+     </AuthProvider>
     </div>
   )
 }

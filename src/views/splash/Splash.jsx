@@ -1,37 +1,16 @@
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useContext } from "react";
+import { Catalog } from "../../store/CatalogProvidex";
 import ProductCard from "../../components/cards/ProductCard";
 import { useMobile } from "../../utils/Hooks";
 
+
 const Splash = () => {
-      const [data, setData] = useState([])
-      const [loading, setLoading] = useState(false)
+
     
 
       const isMobile = useMobile()
-    
-      const fetchData = useCallback(async () =>{
-        try{
-          setLoading(true)  
-          const response = await fetch('https://fakestoreapi.com/products',{
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            },
-        })
-        const data = await response.json()
-        setData(data)
-        setLoading(false)
-        } catch(e) {
-            alert(`Error al cargar los productos`)
-            setLoading(false)
-            console.error(e)
-        }
-      },[])
-    
-      useEffect(()=>{
-        fetchData()
-        console.log(data)
-      },[fetchData])
+      const {data, loading} = useContext(Catalog)
+
 
   if (loading) return <div 
                         style={{

@@ -1,20 +1,30 @@
 import React, {useContext} from 'react'
 import { Star, ShoppingBag  } from 'lucide-react';
-import { ShoppingCart } from '../../store/Store';
+import { ShoppingCartContext } from '../../store/ShoppingCartProvider';
 
 const ProductCard = ({product, handleFilter}) => {
 
-const cart = useContext(ShoppingCart)
+const {setCart} = useContext(ShoppingCartContext)
 
 const handleAddtoCart = () => {
     if(confirm(`Esta seguro que quiere agregar este producto al carrito?`)){
         if(!product) return
-        cart.push(product)
-        alert(`El producto ha sido agregado al carrito.`)
-    }
-} 
+       setCart((prev) => {
+            const existingIndex = prev.findIndex(item => item.id === product.id)
 
-
+            if (existingIndex !== -1) {
+ 
+                const updatedCart = prev.map((item, i) =>
+                i === existingIndex
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+                )
+                return updatedCart
+            } else {
+                return [...prev, { ...product, quantity: 1 }]
+            }
+            })
+        }}
   return (
     <div
     style={{
@@ -89,19 +99,7 @@ const handleAddtoCart = () => {
                         >
                             {product.category}
                         </p>
-                        <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }}
-                        >
-                            {product.rating.rate}
-                            <Star />
-                        </div>
-                        <p>
-                            {`${product.rating.count} votos`}              
-                        </p>
+                        
                 </div>
                 
                 <div
