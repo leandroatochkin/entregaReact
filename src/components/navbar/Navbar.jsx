@@ -5,6 +5,7 @@ import ShoppingCartDialog from '../dialogs/ShoppingCartDialog'
 import { Auth } from '../../store/AuthProvider'
 import LoggedInDialog from '../dialogs/LoggedInDialog'
 import AddProductDialog from '../dialogs/AddProductDialog'
+import { useMobile } from '../../utils/Hooks'
 
 const Navbar = () => {
 const [openDialog, setOpenDialog] = useState({
@@ -12,6 +13,8 @@ const [openDialog, setOpenDialog] = useState({
   logIn: false,
   addProduct: false
 })
+
+const isMobile = useMobile()
 
 const {cart} = useContext(ShoppingCartContext)
 const {user} = useContext(Auth)
@@ -74,7 +77,7 @@ const handleDialog = (dialog, open) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: '20%',
+        width: !isMobile ? '20%' : 'auto'
       }}
       >
           {

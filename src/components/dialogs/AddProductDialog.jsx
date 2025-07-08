@@ -129,7 +129,7 @@ const inputStyles = {
             <HashLoader />
             :
             (
-                <form 
+        <form 
         onSubmit={handleSubmit}
         style={{
             background: '#f5f5f5',
@@ -143,6 +143,9 @@ const inputStyles = {
             width: isMobile ? '100%' : '500px',
         }}
         >
+            {
+                product ? <h2 style={{color: '#333'}}>modificar producto</h2> : <h2 style={{color: '#333'}}>agregar producto</h2>
+            }
             <input
                 type="text"
                 name="category"

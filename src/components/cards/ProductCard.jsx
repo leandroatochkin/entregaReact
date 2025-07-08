@@ -3,11 +3,14 @@ import { Star, ShoppingBag  } from 'lucide-react';
 import { ShoppingCartContext } from '../../store/ShoppingCartProvider';
 import { Auth } from '../../store/AuthProvider';
 import { Trash2, FilePenLine } from 'lucide-react';
+import { useMobile } from '../../utils/Hooks';
 
 const ProductCard = ({product, handleFilter, handleDelete, handleEdit}) => {
 
 const {setCart} = useContext(ShoppingCartContext)
 const {user} = useContext(Auth)
+
+const isMobile = useMobile()
 
 
 const handleAddtoCart = () => {
@@ -103,6 +106,7 @@ const handleAddtoCart = () => {
             display: 'flex',
             flexDirection: 'row',
             background: '#f5f5f5',
+            width: !isMobile ? '100%' : 'auto',
             borderRadius: 8,
             padding: '5px',
             color: '#333',
@@ -117,7 +121,7 @@ const handleAddtoCart = () => {
                 padding: '10px',
             }}
             >
-                <p>{`${product.description.slice(0,50)}...`}</p>
+                <p>{product.description.length > 50 ? `${product.description.slice(0,50)}...` : `${product.description}`}</p>
                 <div
                 style={{
                     display: 'flex',
@@ -164,6 +168,7 @@ const handleAddtoCart = () => {
                     </h2>
                     <button
                     onClick={handleAddtoCart}
+                    disabled={user.role === 'admin'}
                     style={{
                         background: 'linear-gradient(90deg,rgba(255, 94, 0, 1) 0%, rgba(237, 137, 78, 1) 50%, rgba(245, 159, 0, 1) 100%)',
                         width: '100%',
