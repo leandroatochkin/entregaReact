@@ -3,7 +3,7 @@ import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
 import { ShoppingCartProvider } from './store/ShoppingCartProvider'
 import { AuthProvider } from './store/AuthProvider'
-import { CatalogProvider } from './store/CatalogProvidex'
+import { CatalogProvider } from './store/CatalogProvider'
 
 function App() {
 

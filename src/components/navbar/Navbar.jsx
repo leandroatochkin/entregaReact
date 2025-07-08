@@ -4,6 +4,7 @@ import { ShoppingCartContext } from '../../store/ShoppingCartProvider'
 import ShoppingCartDialog from '../dialogs/ShoppingCartDialog'
 import { Auth } from '../../store/AuthProvider'
 import LoggedInDialog from '../dialogs/LoggedInDialog'
+import AddProductDialog from '../dialogs/AddProductDialog'
 
 const Navbar = () => {
 const [openDialog, setOpenDialog] = useState({
@@ -46,6 +47,9 @@ const handleDialog = (dialog, open) => {
     }
     {
       openDialog.logIn && !user.isLoggedIn && <LoggedInDialog onClose={()=>handleDialog('logIn', false)}/>
+    }
+    {
+      openDialog.addProduct && user.role === 'admin' && <AddProductDialog onClose={()=>handleDialog('addProduct', false)}/>
     }
     <div
     style={{

@@ -1,10 +1,14 @@
 import React, {useContext} from 'react'
 import { Star, ShoppingBag  } from 'lucide-react';
 import { ShoppingCartContext } from '../../store/ShoppingCartProvider';
+import { Auth } from '../../store/AuthProvider';
+import { Trash2 } from 'lucide-react';
 
-const ProductCard = ({product, handleFilter}) => {
+const ProductCard = ({product, handleFilter, handleDelete}) => {
 
 const {setCart} = useContext(ShoppingCartContext)
+const {user} = useContext(Auth)
+
 
 const handleAddtoCart = () => {
     if(confirm(`Esta seguro que quiere agregar este producto al carrito?`)){
@@ -40,6 +44,30 @@ const handleAddtoCart = () => {
         borderRadius: 8,
     }}
     >
+        <div
+        style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'end',
+            alignItems: 'center'
+        }}
+        >
+            {
+                user.role === 'admin' && (
+                    <button
+                    onClick={()=>handleDelete(product.id)}
+                    style={{
+                        borderRadius: 50,
+                        backgroundColor: 'red',
+                        color: '#f5f5f5',
+                        border: 'none'
+                    }}
+                    >
+                        <Trash2 />
+                    </button>
+                )
+            }
+        </div>
         <h3
         style={{
             background: 'rgba(0,0,0,0.5)',

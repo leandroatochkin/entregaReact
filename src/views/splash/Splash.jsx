@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Catalog } from "../../store/CatalogProvidex";
+import { Catalog } from "../../store/CatalogProvider";
 import ProductCard from "../../components/cards/ProductCard";
 import { useMobile } from "../../utils/Hooks";
 
@@ -9,10 +9,10 @@ const Splash = () => {
     
 
       const isMobile = useMobile()
-      const {data, loading} = useContext(Catalog)
+      const {data, loading, deleteProduct} = useContext(Catalog)
+       console.log(loading)
 
-
-  if (loading) return <div 
+  if (loading.products) return <div 
                         style={{
                             width: '100vw', 
                             height: '100%',
@@ -48,7 +48,7 @@ const Splash = () => {
     >
         {
             data && data.map((product, index) =>(
-                <ProductCard product={product} key={index} />
+                <ProductCard product={product} key={index} handleDelete={deleteProduct}/>
             ))
         }
     </div>
