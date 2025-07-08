@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export function useMobile() {
     const [isMobile, setIsMobile] = useState(false)
@@ -33,4 +34,8 @@ export const useDisableScroll = (isOpen) => {
       document.body.style.overflow = 'auto' // Clean up on unmount
     }
   }, [isOpen])
+}
+
+export const notify = (message, isError) => {
+  isError ? toast.error(message) : toast (message)
 }

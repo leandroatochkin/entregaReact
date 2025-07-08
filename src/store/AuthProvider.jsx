@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { clientUser, adminUser } from "../utils/Models";
+import { notify } from "../utils/Hooks";
 
 export const Auth = createContext();
 
@@ -49,7 +50,7 @@ export const AuthProvider = ({ children }) => {
       };
       setUser(newUser);
     } else {
-      alert("Invalid credentials");
+      notify("Invalid credentials", true);
     }
   };
 

@@ -2,9 +2,9 @@ import React, {useContext} from 'react'
 import { Star, ShoppingBag  } from 'lucide-react';
 import { ShoppingCartContext } from '../../store/ShoppingCartProvider';
 import { Auth } from '../../store/AuthProvider';
-import { Trash2 } from 'lucide-react';
+import { Trash2, FilePenLine } from 'lucide-react';
 
-const ProductCard = ({product, handleFilter, handleDelete}) => {
+const ProductCard = ({product, handleFilter, handleDelete, handleEdit}) => {
 
 const {setCart} = useContext(ShoppingCartContext)
 const {user} = useContext(Auth)
@@ -54,6 +54,14 @@ const handleAddtoCart = () => {
         >
             {
                 user.role === 'admin' && (
+                    <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 1
+                    }}
+                    >
                     <button
                     onClick={()=>handleDelete(product.id)}
                     style={{
@@ -65,6 +73,18 @@ const handleAddtoCart = () => {
                     >
                         <Trash2 />
                     </button>
+                    <button
+                    onClick={()=>handleEdit(product)}
+                    style={{
+                        borderRadius: 50,
+                        backgroundColor: 'darkslategray',
+                        color: '#f5f5f5',
+                        border: 'none'
+                    }}
+                    >
+                        <FilePenLine />
+                    </button>
+                    </div>
                 )
             }
         </div>

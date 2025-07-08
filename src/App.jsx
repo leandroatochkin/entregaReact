@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer'
 import { ShoppingCartProvider } from './store/ShoppingCartProvider'
 import { AuthProvider } from './store/AuthProvider'
 import { CatalogProvider } from './store/CatalogProvider'
+import { ToastContainer, Bounce } from 'react-toastify';
 
 function App() {
 
@@ -21,6 +22,19 @@ function App() {
       <ShoppingCartProvider>
           <Navbar />
           <Splash />
+          <ToastContainer 
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+          />
           <Footer />
       </ShoppingCartProvider>
       </CatalogProvider>

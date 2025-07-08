@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, createContext } from "react"
+import { notify } from "../utils/Hooks"
 
 export const Catalog = createContext()
 
@@ -11,6 +12,7 @@ const [loading, setLoading] = useState({
   products: false,
   deleting: false,
   adding: false,
+  editing: false
 })
 
     const fetchProducts = useCallback(async () =>{
@@ -55,16 +57,16 @@ const [loading, setLoading] = useState({
         })
 
         if (!response.ok) {
-          alert("Error al eliminar artículo.");
-          return;
+          notify("Error al eliminar artículo.", true)
+          return
         }
 
-        alert("Artículo eliminado.");
-        setData((prevData) => prevData.filter((item) => item.id !== productId));
+        notify("Artículo eliminado.")
+        setData((prevData) => prevData.filter((item) => item.id !== productId))
 
       } catch (e) {
-        alert("Error al eliminar artículo.");
-        console.error(e);
+        notify("Error al eliminar artículo.", true)
+        console.error(e)
       } finally {
         setLoading((prev) => ({
           ...prev,
@@ -87,12 +89,18 @@ const [loading, setLoading] = useState({
           body: JSON.stringify(product)
         })
         if(!response.ok){
-          alert(`Error al agregar artículo.`)
+          notify(`Error al agregar artículo.`, true)
+          return
         }
-        fetchProducts()
+
+        notify(`Artículo agregado.`)
+        
+        
+        await fetchProducts()
+
         } catch(e) {
           console.error(e)
-          alert(`Error al agregar artículo.`)
+          notify(`Error al agregar artículo.`, true)
         } finally {
           setLoading((prev) => ({
           ...prev,
@@ -102,6 +110,47 @@ const [loading, setLoading] = useState({
             } return
     }
 
+    const editProduct = async (product) => {
+      if (confirm(`¿Está seguro que quiere modificar este artículo?`)) {
+        setLoading((prev) => ({
+          ...prev,
+          editing: true
+        }));
+
+        try {
+          const response = await fetch(
+            `https://68681495d5933161d70abd39.mockapi.io/api/v1/product/${product.id}`,
+            {
+              method: 'PUT', 
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(product)
+            }
+          );
+
+          if (!response.ok) {
+            notify(`Error al modificar este artículo.`, true)
+            return
+          }
+
+          notify(`Artículo modificado.`)
+
+          
+          await fetchProducts()
+
+        } catch (e) {
+          console.error(e);
+          notify(`Error al modificar este artículo.`, true)
+        } finally {
+          setLoading((prev) => ({
+            ...prev,
+            editing: false
+          }));
+        }
+      }
+    };
+
     
 
     useEffect(()=>{
@@ -110,7 +159,7 @@ const [loading, setLoading] = useState({
 
       return(
  
-            <Catalog.Provider value={{ data, setData, loading, deleteProduct, addProduct }}>
+            <Catalog.Provider value={{ data, setData, loading, deleteProduct, addProduct, editProduct }}>
               {children}
             </Catalog.Provider>
 

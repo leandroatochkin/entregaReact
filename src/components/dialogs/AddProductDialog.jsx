@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { HashLoader } from 'react-spinners'
-import { Auth } from '../../store/AuthProvider'
 import { Catalog } from '../../store/CatalogProvider'
 import { v4 } from 'uuid'
 import { useMobile } from '../../utils/Hooks'
+import { useDisableScroll } from '../../utils/Hooks'
+
 
 const AddProductDialog = ({product, onClose}) => {
-const {loading, addProduct} = useContext(Catalog)
+const {loading, addProduct, editProduct} = useContext(Catalog)
 const [payload, setPayload] = useState({
     id: v4(),
     category: '',
@@ -17,6 +18,7 @@ const [payload, setPayload] = useState({
 })
 
 const isMobile = useMobile()
+useDisableScroll(true)
 
 useEffect(()=>{
     if(product){
@@ -25,6 +27,7 @@ useEffect(()=>{
         id: product.id,
         category: product.category,
         title: product.title,
+        description: product.description,
         price: product.price,
         image: product.image
     }))
@@ -40,7 +43,8 @@ const handleInputChange = (e) => {
   }));
 };
 
-const handleSubmit = () => {
+const handleSubmit = (e) => {
+  e.preventDefault()
   const { category, title, description, price, image } = payload;
 
  
@@ -70,13 +74,22 @@ const handleSubmit = () => {
     return
   }
 
-  // 4. Submit
   if (product) {
-  //editProduct(payload); // optional logic
+  editProduct(payload)
     } else {
-  addProduct(payload)
+  addProduct(payload) 
 }
-};
+setPayload({
+    id: v4(),
+    category: '',
+    title: '',
+    description: '',
+    price: '',
+    image: ''
+  })
+
+  onClose()
+}
 
 
 

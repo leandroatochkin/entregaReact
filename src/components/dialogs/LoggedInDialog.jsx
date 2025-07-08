@@ -2,13 +2,17 @@ import React, {useState, useContext} from 'react'
 import { Auth } from '../../store/AuthProvider'
 import { useMobile } from '../../utils/Hooks'
 import { HashLoader } from 'react-spinners'
+import { useDisableScroll } from '../../utils/Hooks'
 
 const LoggedInDialog = ({onClose}) => {
 const isMobile = useMobile()
+useDisableScroll(true)
 const { handleLogin } = useContext(Auth)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+
+
 
   const handleSubmit = (e) => {
     setLoading(true)
