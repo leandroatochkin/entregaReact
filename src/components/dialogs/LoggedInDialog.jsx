@@ -78,6 +78,20 @@ const { handleLogin } = useContext(Auth)
                     color: '#333'
                  }}
                  >LOGIN</h2>
+                 <div
+                 style={{
+                    width: '100%',
+                    border: '2px solid coral',
+                    borderRadius: 4,
+                    color: '#333',
+                 }}
+                 >
+                    <p
+                    style={{
+                        textAlign: 'center'
+                    }}
+                    >admin: mail@admin.com | user: mail@user.com || pass: 123456</p>
+                 </div>
             <input 
             type="email" 
             placeholder="Email" 

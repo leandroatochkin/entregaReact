@@ -8,6 +8,7 @@ import AddProductDialog from "../../components/dialogs/AddProductDialog";
 const Splash = () => {
 const [openEditDialog, setOpenEditDialog] = useState(false)
 const [selectedProduct, setSelectedProduct] = useState(null)
+const [currentSlice, setCurrentSlice] = useState(12)
 
     
 
@@ -39,6 +40,10 @@ const [selectedProduct, setSelectedProduct] = useState(null)
                                 no hay productos para mostrar...
                         </div>    
 
+  const handleMoreProducts = () => {
+    setCurrentSlice(currentSlice + 12)
+  }
+
   return (
     <>
     {
@@ -58,11 +63,33 @@ const [selectedProduct, setSelectedProduct] = useState(null)
     }}
     >
         {
-            data && data.map((product, index) =>(
+            data && data.slice(0, currentSlice).map((product, index) =>(
                 <ProductCard product={product} key={index} handleDelete={deleteProduct} handleEdit={()=>handleEdit(product)}/>
             ))
         }
+        
     </div>
+   <div
+   style={{
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: 20
+   }}
+   >
+     <button
+        onClick={handleMoreProducts}
+        disabled={data.length <= currentSlice}
+        style={{
+          background: 'red',
+          height: '50px',
+          width: '90%',
+          zIndex: '2',
+        }}
+        >
+          más
+        </button>
+   </div>
     </>
   )
 }
